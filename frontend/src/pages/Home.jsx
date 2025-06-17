@@ -1,6 +1,6 @@
 import React from 'react'
 import Navbar from '../components/Navbar'
-import bannerImage from '../assets/BannerImage.png'
+import bannerImage from '../assets/bannerImage.png'
 import { Link } from 'react-router-dom'
 
 
@@ -9,7 +9,7 @@ const Home = () => {
    <div className='lg:px-[150px] '>
      <div className='w-full  mt-[50px]  flex gap-[20px] justify-center bg-red-200 p-4 items-center rounded-lg '>
       <div className='lg:w-[30%]   w-[60%] h-full   '>
-        <img src={bannerImage} alt="" className='w-full' />
+        <img src={bannerImages} alt="" className='w-full' />
       </div>
      <div className=" w-[40%] flex flex-col items-center justify-center text-center px-4">
     <h1 className="text-white text-3xl md:text-5xl font-bold mb-2">
