@@ -13,7 +13,7 @@ import TaskRouter from './routes/Tasks.routes.js';
 const app = express()
 dotenv.config()
 app.use(cors({
-  origin:"http://localhost:5173",
+  origin:"https://taskrepfrontend.onrender.com",
   credentials:true
 }))
 app.use(express.json())
