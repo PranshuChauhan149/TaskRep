@@ -1,6 +1,6 @@
 import React from 'react'
 import Navbar from '../components/Navbar'
-import bannerImage from '../assets/bannerImage.png'
+import bannerImage from '../assets/BannerImage.png'
 import { Link } from 'react-router-dom'
 
 
