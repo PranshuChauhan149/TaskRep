@@ -1,3 +1,4 @@
+import uploadOnCloudinary from "../config/cloudinary.js";
 import genToken from "../config/Token.js";
 import User from "../models/User.models.js";
 import bcrypt from 'bcrypt'
@@ -95,3 +96,29 @@ export const Logout = async(req,res)=>{
      return res.json({success:false,message:"Logout error"})
   }
 }
+
+
+export const updatedProfile = async (req, res) => {
+  try {
+    
+    const userId = req.userId;
+     let imageUrl = req.body.image || "";
+    if (req.file) {
+      imageUrl = await uploadOnCloudinary(req.file.path);
+    }
+
+    const user = await User.findByIdAndUpdate(
+      userId,
+      { image: imageUrl },
+      { new: true } // to return the updated document
+    );
+
+    if (user) {
+      return res.status(200).json({ success: true, user });
+    } else {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+  } catch (error) {
+    return res.status(500).json({ success: false, message: "Server error", error: error.message });
+  }
+};

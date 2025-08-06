@@ -5,7 +5,7 @@ import { useContext } from 'react';
 import { AppContext } from '../contexts/AppContext';
 
 const Completed = () => {
-  const {tasks} = useContext(AppContext)
+  const {tasks,deleteELe} = useContext(AppContext)
   const completedTasks = tasks.filter((task) => task.completed);
   return (
     <div className="w-full p-6 min-h-screen bg-gradient-to-b from-red-100 to-red-200">
@@ -35,7 +35,7 @@ const Completed = () => {
               </div>
 
               <div className="flex gap-3 text-gray-600 text-lg">
-                <FaTrashAlt className="hover:text-red-500 cursor-pointer" title="Delete Task" />
+                <FaTrashAlt  className="hover:text-red-500 cursor-pointer" onClick={()=>{deleteELe(task._id)}} title="Delete Task" />
               </div>
             </div>
           ))}

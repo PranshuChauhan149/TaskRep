@@ -16,16 +16,19 @@ const userSchema = new mongoose.Schema(
       required: true,
     },
     list: [
-  {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Task", 
-  }
-],
-
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Task',
+      },
+    ],
+     image:{
+      type:String,
+      default : ""
+    }
   },
   { timestamps: true }
 );
 
-const User = mongoose.model("User", userSchema);
+const User = mongoose.model('User', userSchema);
 
 export default User;

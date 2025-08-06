@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { AppContext } from '../contexts/AppContext';
 import axios from 'axios';
+import profileImg from "../assets/to-do-list.png";
 import { toast } from 'react-toastify';
 import navImage from "../assets/to-do-list3.png";
 import { Link, useNavigate } from 'react-router-dom';
@@ -98,7 +99,7 @@ const Navbar = () => {
                 onClick={() => setOpen((prev) => !prev)}
                 className="w-[40px] h-[40px] rounded-full bg-red-300 text-white flex items-center justify-center cursor-pointer hover:bg-red-400 transition"
               >
-                {user?.username?.charAt(0).toUpperCase() || "U"}
+               <img src={user?.image || profileImg} alt="" className='rounded-full  w-full h-full object-cover' />
               </div>
 
               {/* Dropdown Menu */}

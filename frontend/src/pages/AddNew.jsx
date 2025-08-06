@@ -7,7 +7,7 @@ import { AppContext } from '../contexts/AppContext';
 import { useNavigate } from 'react-router-dom';
 const AddNew = () => {
   const navigate = useNavigate();
-  const { serverUrl ,tasks,deleteELe,updateComp} = useContext(AppContext);
+  const { serverUrl,fetchTasks ,tasks,deleteELe,updateComp} = useContext(AppContext);
     const [task, setTask] = useState('');
   const [time, setTime] = useState('');
   const [date, setDate] = useState('');
@@ -45,7 +45,9 @@ const AddNew = () => {
 );
 
     if(res){
+      await fetchTasks();
       toast.success("Task added successfully!");
+      navigate("/to-do-list/all")
     }
 
     setTask('');

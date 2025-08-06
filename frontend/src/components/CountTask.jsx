@@ -10,7 +10,6 @@ import { AppContext } from "../contexts/AppContext";
 const CountTask = () => {
   const {tasks} = useContext(AppContext)
 
-    console.log(tasks)
 const completedTasks = tasks.filter((task) => task.completed);
 const todayDate = new Date().toISOString().split("T")[0]; // e.g., "2025-06-17"
 const todayTask = tasks.filter((task) => task.date === todayDate);

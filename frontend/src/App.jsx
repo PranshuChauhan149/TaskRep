@@ -14,14 +14,18 @@ import TODO from "./pages/TODO";
 import { AppContext } from "./contexts/AppContext";
 import Profile from "./pages/Profile";
 import UpdateTask from "./components/UpdateTask";
+import { useEffect } from "react";
 
 const App = () => {
-  const { user } = useContext(AppContext);
+  const { user,getcurrent } = useContext(AppContext);
   const location = useLocation();
 
   // Pages that should not show navbar/footer
   const hideLayoutRoutes = ["/login", "/signup"];
   const hideLayout = hideLayoutRoutes.includes(location.pathname);
+  useEffect(()=>{
+    getcurrent();
+  },[])
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -30,21 +34,20 @@ const App = () => {
       {!hideLayout && <Navbar />}
 
       <div className="flex-grow">
-        <Routes>
-          {/* Auth pages */}
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/login" element={!user ? <Login /> : <Navigate to="/" />} />
+       <Routes>
+  {/* Public Routes */}
+  <Route path="/signup" element={<SignUp />} />
+  <Route path="/login" element={!user ? <Login /> : <Navigate to="/" />} />
+  <Route path="/about" element={<About />} />
+  <Route path="/contact" element={<Contact />} />
 
-          {/* Public pages */}
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/to-do-list/update/:id" element={<UpdateTask />} />
+  {/* Protected Routes */}
+  <Route path="/" element={user ? <Home /> : <Navigate to="/login" />} />
+  <Route path="/profile" element={user ? <Profile /> : <Navigate to="/login" />} />
+  <Route path="/to-do-list/*" element={user ? <TODO /> : <Navigate to="/login" />} />
+  <Route path="/to-do-list/update/:id" element={user ? <UpdateTask /> : <Navigate to="/login" />} />
+</Routes>
 
-          {/* To-Do List */}
-          <Route path="/to-do-list/*" element={<TODO />} />
-        </Routes>
       </div>
 
       {!hideLayout && <Footer />}

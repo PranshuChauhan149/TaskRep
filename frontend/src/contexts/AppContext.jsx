@@ -7,29 +7,34 @@ import { toast } from "react-toastify";
 export const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
-  const serverUrl = "https://taskreptodo.onrender.com"
-  const [user,setUser] = useState(null);
-  const {id} = useParams();
-  const [tasks,setTasks]  = useState([]);
-  const [update,setUpdate] = useState(null);
+  const serverUrl = "http://localhost:3000";
+  const [user, setUser] = useState(null);
+  const { id } = useParams();
+  const [tasks, setTasks] = useState([]);
+  const [update, setUpdate] = useState(null);
+  const [getCurrentUser, setGetCurrentUser] = useState(null);
 
+  const getcurrent = async () => {
+    try {
+      const res = axios.get("/api/auth/current", { withCredentials: true });
+    
+    } catch (error) {
+      toast.error("current error");
+    }
+  };
 
-  const fetchTasks = async()=>{
-    try{
-      const res = await axios.get(`${serverUrl}/api/task/all-tasks`,{
-        withCredentials:true
-      })
-      if(res){
+  const fetchTasks = async () => {
+    try {
+      const res = await axios.get(`${serverUrl}/api/task/all-tasks`, {
+        withCredentials: true,
+      });
+      if (res) {
         setTasks(res.data.tasks); // ✅ Correct
-        
-        
       }
+    } catch (error) {
+      toast.error("Not fetch data");
     }
-    catch(error){
-      toast.error("Not fetch data")
-    }
-  }
-
+  };
 
   const updateComp = async (id) => {
     try {
@@ -39,8 +44,8 @@ export const AppProvider = ({ children }) => {
         { withCredentials: true }
       );
       if (res.data.success) {
+        await fetchTasks(); // refresh tasks
         toast.success("Task marked as completed");
-        fetchTasks(); // refresh tasks
       } else {
         toast.error("Failed to update task");
       }
@@ -48,7 +53,7 @@ export const AppProvider = ({ children }) => {
       toast.error("Error updating task");
     }
   };
-  const deleteELe  = async (id) => {
+  const deleteELe = async (id) => {
     try {
       const res = await axios.delete(
         `${serverUrl}/api/task/delete/${id}`,
@@ -56,8 +61,8 @@ export const AppProvider = ({ children }) => {
         { withCredentials: true }
       );
       if (res.data.success) {
+        await fetchTasks(); // refresh tasks
         toast.success("Task deleted");
-        fetchTasks(); // refresh tasks
       } else {
         toast.error("Failed to deleted task");
       }
@@ -66,30 +71,26 @@ export const AppProvider = ({ children }) => {
     }
   };
 
-
-  useEffect(()=>{
+  useEffect(() => {
     fetchTasks();
-  },[user])
-
-
- 
+  }, [user]);
 
   return (
     <AppContext.Provider
       value={{
-       tasks,
+        tasks,
         serverUrl,
         user,
         setUser,
         updateComp,
-        deleteELe
+        deleteELe,
+        getcurrent,
+        fetchTasks
       }}
-      
     >
       {children}
     </AppContext.Provider>
   );
 };
-
 
 export const useAppContext = () => useContext(AppContext);

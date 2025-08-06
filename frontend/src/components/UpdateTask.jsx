@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import { useAppContext } from '../contexts/AppContext';
 
 const UpdateTask = () => {
-  const { serverUrl } = useAppContext();
+  const { serverUrl,fetchTasks } = useAppContext();
   const { id } = useParams(); // task ID from URL
   const navigate = useNavigate();
 
@@ -15,7 +15,7 @@ const UpdateTask = () => {
 
   // Fetch task details on load
   useEffect(() => {
-    const fetchTask = async () => {
+    const updateTask = async () => {
       try {
         const res = await axios.get(`${serverUrl}/api/task/update/${id}`, {
           withCredentials: true,
@@ -29,7 +29,7 @@ const UpdateTask = () => {
       }
     };
 
-    fetchTask();
+    updateTask();
   }, [id, serverUrl]);
 
   // Submit update
@@ -44,6 +44,7 @@ const UpdateTask = () => {
       );
 
       if (res.data.success) {
+        await fetchTasks();
         toast.success("Task updated successfully!");
         navigate("/to-do-list/all");
       } else {
