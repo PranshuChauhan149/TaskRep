@@ -9,7 +9,7 @@ const Login = () => {
 
   const [email, setemail] = useState("");
   const [password, setPassowrd] = useState("");
-  const { serverUrl } = useContext(AppContext);
+  const { serverUrl,getcurrent } = useContext(AppContext);
   console.log(serverUrl);
 
   const handleBtn = async (e) => {
@@ -28,6 +28,7 @@ const Login = () => {
 
       if(res){
         navigate("/")
+        await getcurrent();
         toast.success("Login successfully");
       }
       console.log(res);
