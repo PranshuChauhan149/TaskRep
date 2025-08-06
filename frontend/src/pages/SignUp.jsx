@@ -7,17 +7,17 @@ import { AppContext } from '../contexts/AppContext';
 import { FaArrowLeft } from 'react-icons/fa';
 const SignUp = () => {
 
-  const {serverUrl,user}  = useContext(AppContext);
+  const {serverUrl,user,getcurrent}  = useContext(AppContext);
 
   const [username,setUsername] = useState("");
   const [email,setEmail] = useState("");
   const [password,setpassword] = useState("");
   const navigate = useNavigate();
 
-  const handleBtn = (e) =>{
+  const handleBtn =async (e) =>{
     try{
       e.preventDefault();
-      const res = axios.post(`${serverUrl}/api/user/signup`,{
+      const res = await axios.post(`${serverUrl}/api/user/signup`,{
         username,
         email,
         password
@@ -26,6 +26,7 @@ const SignUp = () => {
       })
 
       if(res){
+        await getcurrent();
         navigate("/")
         toast.success("Account Created Successfully");
       }
