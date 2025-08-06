@@ -28,12 +28,12 @@ export const SignUp = async (req,res) =>{
 
     const token =await genToken(user._id);
 
-    res.cookie("token",token,{
-       httpOnly: true,
-      maxAge: 7 * 24 * 60 * 60 * 1000,
-      sameSite: "Strict",
-      secure: false,
-    })
+      res.cookie("token", token, {
+      httpOnly: true,
+      maxAge: 7 * 24 * 60 * 60 * 1000,  // 7 days
+      sameSite: "None",                 // ✅ For cross-site cookies
+      secure: true,                     // ✅ Must be true for HTTPS
+    });
 
     if(user){
       return res.json({success:true,message:user})
@@ -65,12 +65,12 @@ export const Login =async (req,res)=>{
     if(hashPassword){
 
       const token =await genToken(user._id);
-      res.cookie("token",token,{
-       httpOnly: true,
-      maxAge: 7 * 24 * 60 * 60 * 1000,
-      sameSite: "Strict",
-      secure: false,
-      })
+         res.cookie("token", token, {
+      httpOnly: true,
+      maxAge: 7 * 24 * 60 * 60 * 1000,  // 7 days
+      sameSite: "None",                 // ✅ For cross-site cookies
+      secure: true,                     // ✅ Must be true for HTTPS
+    });
 
       return res.json({success:true,message:user})
     }
@@ -122,3 +122,4 @@ export const updatedProfile = async (req, res) => {
     return res.status(500).json({ success: false, message: "Server error", error: error.message });
   }
 };
+
