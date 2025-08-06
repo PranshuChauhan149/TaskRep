@@ -12,7 +12,7 @@ const app = express();
 dotenv.config();
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "https://task-rep-rust.vercel.app",
     credentials: true,
   })
 );
@@ -34,3 +34,4 @@ app.listen(PORT, () => {
   connectDb();
   console.log(`server is running on this PORT ${PORT}`);
 });
+
