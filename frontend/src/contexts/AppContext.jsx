@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 export const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
-  const serverUrl = "http://localhost:3000";
+  const serverUrl = "https://task-backend-tojw.onrender.com";
   const [user, setUser] = useState(null);
   const { id } = useParams();
   const [tasks, setTasks] = useState([]);
@@ -94,3 +94,4 @@ export const AppProvider = ({ children }) => {
 };
 
 export const useAppContext = () => useContext(AppContext);
+
