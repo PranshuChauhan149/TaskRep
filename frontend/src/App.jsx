@@ -23,9 +23,18 @@ const App = () => {
   // Pages that should not show navbar/footer
   const hideLayoutRoutes = ["/login", "/signup"];
   const hideLayout = hideLayoutRoutes.includes(location.pathname);
-  useEffect(()=>{
-    getcurrent();
-  },[])
+useEffect(() => {
+  const fetchCurrentUser = async () => {
+    try {
+      await getcurrent();
+    } catch (error) {
+      console.error("Error fetching current user:", error);
+    }
+  };
+
+  fetchCurrentUser();
+}, [getcurrent]);
+
 
   return (
     <div className="min-h-screen flex flex-col">
